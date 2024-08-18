@@ -1,0 +1,11 @@
+- name: Copy grafana nginx configuration
+  copy:
+    src: conf/sites-available/template.conf.j2
+    dest: "/etc/nginx/sites-available/{{ item }}"
+  with_items: "{{ sites }}"
+- name: Symbolic link to sites-enabled
+  file:
+    src: "/etc/nginx/sites-available/{{ item }}"
+    dest: "/etc/nginx/sites-enabled/{{ item }}"
+    state: link
+  with_items: "{{ sites }}"
